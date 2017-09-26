@@ -1,0 +1,95 @@
+<html>
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Users Index</title>
+      
+    </head>
+
+    <style>
+        p {
+            margin: 0px 0px 0px 0px;
+
+        }
+
+        table, th, td{
+          border: 1px black solid;
+          
+        }
+
+        input{
+          display: inline-block;
+        }
+
+        th {
+          background-color: #DDCDCD;
+        }
+
+        th, td{
+          padding: 0px 10px 0px 10px;
+        }
+
+        button{
+          margin-top: 10px;
+          display: inline-block;
+        }
+
+        .i_b{
+          display: inline-block;
+        }
+    </style>
+
+    <body>
+
+      <h1>Users</h1>
+      
+      <table>
+          <col width="30">
+          <col width="180">
+          <col width="180">
+          <col width="200">
+          <col width="180">
+
+        <tr>
+          <th>id</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Created At</th>
+          <th>Actions</th>
+        </tr>
+
+        {% for user in users %}
+        <tr>
+          
+          <td>{{user.id}}</td>
+          <td> {{user.first_name}} {{user.last_name}} </td>
+          <td>{{user.email}}</td>
+          <td>{{user.created_at}}</td>
+          <td>
+            <form action="/users/{{user.id}}" method='GET' class='i_b'>
+              <button type="submit" name="show" value="{{user.id}}">Show</button>
+            </form>
+            
+            <form action="/users/{{user.id}}/edit" method='GET' class='i_b'>
+              {% csrf_token %}
+              <button type="submit" name="edit" value="{{user.id}}">Edit</button>
+            </form>
+
+            <form action="/users/{{user.id}}/destroy" method = 'GET' class='i_b'>
+              {% csrf_token %}
+              <button type="submit" name="delete" value="{{user.id}}">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+        
+
+      
+    </table>
+
+    <form action="/users/new">
+      <button type="submit">Add a new user</button>
+    </form>
+    </body>
+</html>
